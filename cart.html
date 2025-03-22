@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Horizon - Subscription</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #1e1e2f, #2c2c44);
+            color: white;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 2.5rem;
+        }
+
+        /* Subscription Plans */
+        .plans-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .plan {
+            background: #292943;
+            padding: 30px;
+            border-radius: 15px;
+            width: 280px;
+            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .plan:hover {
+            transform: translateY(-5px);
+        }
+
+        .plan h2 {
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+
+        .features {
+            list-style: none;
+            padding: 0;
+        }
+
+        .features li {
+            margin: 10px 0;
+        }
+
+        .subscribe-btn {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #ffcc00;
+            border: none;
+            color: #222;
+            font-weight: bold;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .subscribe-btn:hover {
+            background: #e6b800;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #292943;
+            padding: 20px;
+            width: 320px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal h3 {
+            margin-bottom: 10px;
+        }
+
+        .modal input {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .modal button {
+            padding: 8px 15px;
+            background: #ffcc00;
+            border: none;
+            color: #222;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Choose Your Subscription</h1>
+
+    <div class="plans-container">
+        <!-- Free Plan -->
+        <div class="plan">
+            <h2>Free Plan</h2>
+            <p class="price">₹0 / month</p>
+            <ul class="features">
+                <li>Limited Artwork Access</li>
+                <li>Basic Features</li>
+                <li>Community Access</li>
+            </ul>
+            <button class="subscribe-btn" onclick="openModal('Free')">Subscribe</button>
+        </div>
+
+        <!-- Premium Plan -->
+        <div class="plan">
+            <h2>Premium Plan</h2>
+            <p class="price">₹299 / month</p>
+            <ul class="features">
+                <li>Unlimited Artwork Access</li>
+                <li>High-Resolution Downloads</li>
+                <li>Exclusive Content</li>
+                <li>Ad-Free Experience</li>
+            </ul>
+            <button class="subscribe-btn" onclick="openModal('Premium')">Subscribe</button>
+        </div>
+    </div>
+
+    <!-- Subscription Modal -->
+    <div id="subscriptionModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h3>Subscribe to <span id="planName"></span></h3>
+        <input type="text" id="userName" placeholder="Enter your name" required>
+        <input type="email" id="userEmail" placeholder="Enter your email" required>
+        <button id="confirmBtn" onclick="proceedToPayment()">Proceed to Payment</button>
+    </div>
+
+    <script>
+        let selectedPlan = '';
+
+        function openModal(plan) {
+            selectedPlan = plan;
+            document.getElementById('planName').innerText = plan;
+            document.getElementById('subscriptionModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('subscriptionModal').style.display = 'none';
+        }
+
+        function proceedToPayment() {
+            const name = document.getElementById('userName').value;
+            const email = document.getElementById('userEmail').value;
+
+            if (!name || !email) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            if (selectedPlan === 'Premium') {
+                var options = {
+                    "key": "YOUR_KEY_ID", // Replace with your Razorpay API Key
+                    "amount": 29900, // ₹299 in paise (100 paise = 1 INR)
+                    "currency": "INR",
+                    "name": "Creative Horizon",
+                    "description": "Premium Subscription",
+                    "image": "images\demologo.jpg", // Your logo URL
+                    "handler": function (response) {
+                        alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+                        closeModal();
+                    },
+                    "prefill": {
+                        "name": name,
+                        "email": email
+                    },
+                    "theme": {
+                        "color": "#ffcc00"
+                    }
+                };
+
+                var rzp1 = new Razorpay(options);
+                rzp1.open();
+            } else {
+                alert("You have successfully subscribed to the Free Plan!");
+                closeModal();
+            }
+        }
+    </script>
+
+</body>
+</html>

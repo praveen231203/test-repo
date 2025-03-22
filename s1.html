@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery with Modal and Navigation</title>
+
+   <!-- Font Awesome for Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- Swiper CSS for Carousel -->
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery .col {
+            flex: 1 1 calc(33.333% - 20px);
+            max-width: calc(33.333% - 20px);
+        }
+
+        .gallery .col img {
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+
+        .gallery .col img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Section Headings */
+        h2 {
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        h2::before {
+            content: "";
+            position: absolute;
+            width: 60px;
+            height: 4px;
+            background-color: #FF6F61;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* Dark background for modal */
+            backdrop-filter: blur(10px); /* Apply blur effect */
+            -webkit-backdrop-filter: blur(10px); /* Fallback for Safari */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 80%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .modal img {
+            max-width: 100%;
+            max-height: 60vh;
+            border-radius: 10px;
+        }
+
+        .modal-content {
+            margin-top: 15px;
+            text-align: center;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .modal-content h3 {
+            font-size: 24px;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .modal-content p {
+            font-size: 16px;
+            color: #ffffff;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            font-size: 30px;
+            margin-top: 10px;
+        }
+
+        .icons i {
+            cursor: pointer;
+            color: #ccc;
+            transition: color 0.3s;
+        }
+
+        .icons i:hover {
+            color: #FF6F61;
+        }
+
+        .icons i.liked {
+            color: #FF6F61;
+        }
+
+        /* Navigation Arrows */
+        .arrow-left, .arrow-right {
+            position: fixed;
+            top: 50%;
+            font-size: 40px;
+            color: #fff;
+            cursor: pointer;
+            z-index: 1001;
+            display: none;
+            transition: color 0.3s;
+        }
+
+        .arrow-left:hover, .arrow-right:hover {
+            color: #FF6F61;
+        }
+
+        .arrow-left {
+            left: 20px;
+            transform: translateY(-50%);
+        }
+
+        .arrow-right {
+            right: 20px;
+            transform: translateY(-50%);
+        }
+    </style>
+</head>
+<body>
+    <!-- Galleries Section -->
+    <div class="scroll-section" id="gallery">
+        <h2>Galleries</h2>
+        <div class="gallery">
+            <div class="col">
+                <img src="images/4.webp" alt="Boat on Calm Water" onclick="openModal(0)">
+                <img src="images/9.webp" alt="Wintry Mountain Landscape" onclick="openModal(1)">
+            </div>
+            <div class="col">
+                <img src="images/5.webp" alt="Mountains in the Clouds" onclick="openModal(2)">
+                <img src="images/8.jpg" alt="Forest During Sunset" onclick="openModal(3)">
+            </div>
+            <div class="col">
+                <img src="images/6.webp" alt="Quiet Lake at Dawn" onclick="openModal(4)">
+                <img src="images/7.webp" alt="Cityscape at Night" onclick="openModal(5)">
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-container">
+            <img src="" id="modalImg" alt="Zoomed Art">
+            <div class="modal-content">
+                <h3 id="modalTitle">Image Title</h3>
+                <p id="modalDescription">This is a brief description of the image.</p>
+                <div class="icons">
+                    <i class="material-icons" id="like-icon" onclick="likeImage()">favorite_border</i>
+                    <i class="material-icons" onclick="downloadImage()">download</i>
+                    <i class="material-icons" onclick="shareImage()">share</i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Arrows -->
+    <i class="material-icons arrow-left" id="arrow-left" onclick="navigateImage(-1)">chevron_left</i>
+    <i class="material-icons arrow-right" id="arrow-right" onclick="navigateImage(1)">chevron_right</i>
+
+    <script>
+        const images = [
+            { src: "images/4.webp", description: "Boat on calm water, showcasing serenity." },
+            { src: "images/9.webp", description: "A wintry mountain landscape with snow-covered peaks." },
+            { src: "images/5.webp", description: "Mountains surrounded by clouds, a breathtaking view." },
+            { src: "images/8.jpg", description: "A forest glowing with a warm sunset." },
+            { src: "images/6.webp", description: "A quiet lake at dawn, reflecting the morning glow." },
+            { src: "images/7.webp", description: "A vibrant cityscape illuminated at night." }
+        ];
+
+        let currentIndex = 0;
+
+        function openModal(index) {
+            currentIndex = index;
+            updateModalContent();
+            document.getElementById('modal').style.display = 'flex';
+            document.getElementById('arrow-left').style.display = 'block';
+            document.getElementById('arrow-right').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+            document.getElementById('arrow-left').style.display = 'none';
+            document.getElementById('arrow-right').style.display = 'none';
+        }
+
+        function updateModalContent() {
+            const modalImg = document.getElementById('modalImg');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDescription = document.getElementById('modalDescription');
+        
+            // Ensure the current image exists
+            if (images[currentIndex]) {
+                modalImg.src = images[currentIndex].src;
+                modalTitle.innerText = `Image ${currentIndex + 1}`;
+                modalDescription.innerText = images[currentIndex].description;
+            } else {
+                console.error('Invalid image index.');
+            }
+        }
+        
+        function navigateImage(direction) {
+            // Calculate the new index cyclically
+            currentIndex = (currentIndex + direction + images.length) % images.length;
+            updateModalContent();
+        }
+        
+        function downloadImage() {
+            // Ensure the current image exists
+            if (images[currentIndex]) {
+                const link = document.createElement('a');
+                link.href = images[currentIndex].src;
+                link.download = `Image_${currentIndex + 1}.jpg`;
+                link.click();
+            } else {
+                console.error('Invalid image index.');
+            }
+        }
+
+        // Share Image
+function shareImage() {
+    const imageUrl = images[currentIndex].src;
+
+    if (navigator.share) {
+        navigator.share({
+            title: 'Check out this image!',
+            text: `Look at this amazing artwork: ${images[currentIndex].description}`,
+            url: imageUrl,
+        }).catch(error => console.error('Error sharing:', error));
+    } else {
+        navigator.clipboard.writeText(imageUrl).then(() => {
+            alert('Image link copied to clipboard!');
+        }).catch(err => console.error('Error copying link:', err));
+    }
+}
+
+        function likeImage() {
+            const likeIcon = document.getElementById('like-icon');
+            likeIcon.classList.toggle('liked');
+            likeIcon.innerText = likeIcon.classList.contains('liked') ? 'favorite' : 'favorite_border';
+        }
+
+        document.getElementById('modal').addEventListener('click', function (event) {
+            if (event.target.id === 'modal') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

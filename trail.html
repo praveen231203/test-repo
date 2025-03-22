@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery with Modal</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        h2 {
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .gallery .col {
+            flex: 1 1 calc(33.333% - 20px);
+            max-width: calc(33.333% - 20px);
+        }
+
+        .gallery img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.85);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 80%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .modal img {
+            max-width: 100%;
+            max-height: 60vh;
+            border-radius: 10px;
+        }
+
+        .modal-content {
+            margin-top: 15px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .modal-content h3 {
+            font-size: 24px;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .modal-content p {
+            font-size: 16px;
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            font-size: 30px;
+            margin-top: 10px;
+        }
+
+        .icons i {
+            cursor: pointer;
+            color: #ccc;
+            transition: color 0.3s;
+        }
+
+        .icons i:hover {
+            color: #FF6F61;
+        }
+
+        .icons i.liked {
+            color: #FF6F61;
+        }
+
+        .like-count {
+            font-size: 18px;
+            color: #fff;
+            margin-left: 8px;
+            transition: color 0.3s;
+        }
+
+        /* Navigation Arrows */
+        .arrow-left, .arrow-right {
+            position: absolute;
+            top: 50%;
+            font-size: 40px;
+            color: #fff;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .arrow-left {
+            left: -50px;
+            transform: translateY(-50%);
+        }
+
+        .arrow-right {
+            right: -50px;
+            transform: translateY(-50%);
+        }
+
+        @media (max-width: 768px) {
+            .gallery .col {
+                flex: 1 1 calc(50% - 20px);
+                max-width: calc(50% - 20px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery .col {
+                flex: 1 1 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2>Art Gallery</h2>
+
+    <!-- Galleries Section -->
+    <div class="gallery" id="gallery">
+        <div class="col" data-category="nature">
+            <img src="images/4.webp" alt="Boat on Calm Water" onclick="openModal(0)">
+            <img src="images/9.webp" alt="Wintry Mountain Landscape" onclick="openModal(1)">
+        </div>
+        <div class="col" data-category="nature">
+            <img src="images/5.webp" alt="Mountains in the Clouds" onclick="openModal(2)">
+            <img src="images/8.jpg" alt="Forest During Sunset" onclick="openModal(3)">
+        </div>
+        <div class="col" data-category="architecture">
+            <img src="images/6.webp" alt="Quiet Lake at Dawn" onclick="openModal(4)">
+            <img src="images/7.webp" alt="Cityscape at Night" onclick="openModal(5)">
+        </div>
+        <div class="col" data-category="additional">
+            <img src="images/10.jpg" alt="Desert Landscape" onclick="openModal(6)">
+            <img src="images/11.jpg" alt="Ocean Waves" onclick="openModal(7)">
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-container">
+            <i class="material-icons arrow arrow-left" onclick="navigateImage(-1)">chevron_left</i>
+            <img src="" id="modalImg" alt="Zoomed Art">
+            <i class="material-icons arrow arrow-right" onclick="navigateImage(1)">chevron_right</i>
+            <div class="modal-content">
+                <h3 id="modalTitle">Image Title</h3>
+                <p id="modalDescription">This is a brief description of the image.</p>
+                <div class="icons">
+                    <i class="material-icons like-icon" id="like-icon" onclick="likeImage(currentIndex)">favorite_border</i>
+                    <span class="like-count" id="like-count">0 likes</span>
+                    <a id="download-link" style="color: inherit; text-decoration: none;">
+                        <i class="material-icons">download</i>
+                    </a>
+                    <i class="material-icons" onclick="shareImage()">share</i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const images = [
+            { src: "images/4.webp", description: "Boat on calm water, showcasing serenity.", likeCount: 0 },
+            { src: "images/9.webp", description: "A wintry mountain landscape with snow-covered peaks.", likeCount: 0 },
+            { src: "images/5.webp", description: "Mountains surrounded by clouds, a breathtaking view.", likeCount: 0 },
+            { src: "images/8.jpg", description: "A forest during sunset, highlighting the beauty of nature.", likeCount: 0 },
+            { src: "images/6.webp", description: "A quiet lake at dawn with mist rising.", likeCount: 0 },
+            { src: "images/7.webp", description: "A cityscape at night with lights twinkling.", likeCount: 0 },
+            { src: "images/10.jpg", description: "A serene desert landscape with rolling dunes.", likeCount: 0 },
+            { src: "images/11.jpg", description: "Ocean waves crashing against rocks during sunrise.", likeCount: 0 }
+        ];
+
+        let currentIndex = 0;
+        const likedImages = JSON.parse(localStorage.getItem('likedImages')) || [];
+
+        window.onload = function() {
+            const storedLikes = JSON.parse(localStorage.getItem('imageLikes')) || [];
+            storedLikes.forEach(like => {
+                images[like.index].likeCount = like.count;
+            });
+        };
+
+        function openModal(index) {
+            currentIndex = index;
+            updateModalContent();
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function updateModalContent() {
+            const modalImg = document.getElementById('modalImg');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDescription = document.getElementById('modalDescription');
+            const downloadLink = document.getElementById('download-link');
+            const likeIcon = document.getElementById('like-icon');
+            const likeCount = document.getElementById('like-count');
+
+            modalImg.src = images[currentIndex].src;
+            modalTitle.innerText = `Image ${currentIndex + 1}`;
+            modalDescription.innerText = images[currentIndex].description;
+            likeCount.innerText = `${images[currentIndex].likeCount} ${images[currentIndex].likeCount === 1 ? 'like' : 'likes'}`;
+            likeIcon.classList.toggle('liked', likedImages.includes(currentIndex));
+            likeIcon.innerText = likedImages.includes(currentIndex) ? 'favorite' : 'favorite_border';
+
+            downloadLink.href = images[currentIndex].src;
+            downloadLink.download = `Image_${currentIndex + 1}.${images[currentIndex].src.split('.').pop()}`;
+        }
+
+        function navigateImage(direction) {
+            currentIndex = (currentIndex + direction + images.length) % images.length;
+            updateModalContent();
+        }
+
+        function likeImage(index) {
+            const likeIcon = document.getElementById('like-icon');
+            const likeCount = document.getElementById('like-count');
+
+            if (!likedImages.includes(index)) {
+                images[index].likeCount++;
+                likedImages.push(index);
+
+                likeIcon.classList.add('liked');
+                likeIcon.innerText = 'favorite';
+                likeCount.innerText = `${images[index].likeCount} ${images[index].likeCount === 1 ? 'like' : 'likes'}`;
+
+                saveLikesToLocalStorage();
+            }
+        }
+
+        function saveLikesToLocalStorage() {
+            const likes = images.map((image, index) => ({
+                index: index,
+                count: image.likeCount
+            }));
+            localStorage.setItem('imageLikes', JSON.stringify(likes));
+            localStorage.setItem('likedImages', JSON.stringify(likedImages));
+        }
+
+        function shareImage() {
+            const imageUrl = images[currentIndex].src;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Check out this image!',
+                    text: 'Look at this beautiful image I found.',
+                    url: imageUrl,
+                }).catch(error => console.error('Error sharing:', error));
+            } else {
+                navigator.clipboard.writeText(imageUrl).then(() => {
+                    alert('Image link copied to clipboard!');
+                }).catch(err => console.error('Error copying link:', err));
+            }
+        }
+
+        document.getElementById('modal').addEventListener('click', function (event) {
+            if (event.target.className === "modal") {
+                this.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
