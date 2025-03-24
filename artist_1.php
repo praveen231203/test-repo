@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artist Profile</title>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-      
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Artist Profile</title>
+        
         <!-- Font Awesome for Icons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         
@@ -22,9 +25,8 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     
     <style>
-       
-/* General Reset */
-* {
+        /* General Reset */
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -36,9 +38,10 @@
             background-color: #f5f5f5;
         }
         
-/* Header Section */
-        .header-section {
-            background: linear-gradient(45deg, #0d47a1, #424242, #000000);
+
+       /* Header Section */
+       .header-section {
+        background: linear-gradient(45deg, #0d47a1, #424242, #000000);
             color: #fff;
             display: flex;
             justify-content: space-between;
@@ -76,8 +79,9 @@
             font-weight: bold;
             color: #fff;
         }
-        /* Marquee Effect for Welcome Message */
-        .welcome-message {
+
+   /* Marquee Effect for Welcome Message */
+   .welcome-message {
             font-family: 'Playfair Display', serif;
             font-size: 24px;
             color: #fff;
@@ -174,8 +178,7 @@
             .search-container {
                 width: 250px;
             }
-        }
-        .suggestions-dropdown {
+        }        .suggestions-dropdown {
     position: absolute; /* Position it relative to the parent container */
     background-color: #ffffff; /* White background for the dropdown */
     border: 1px solid #ddd; /* Border for the dropdown */
@@ -200,7 +203,6 @@
 .suggestion-item:hover {
     background-color: #f0f0f0; /* Highlight on hover */
 }
-
 
         /* Main container */
         .profile-container {
@@ -320,8 +322,9 @@
         </div>
         <h1>Creative Horizon</h1>
     </div>
-<!-- Search Bar -->
-    <div class="search-container">
+
+     <!-- Search Bar -->
+     <div class="search-container">
         <input type="text" id="search-bar" class="search-bar" placeholder="Search for products, services, etc." oninput="showSuggestions(this.value)">
         <i class="fa fa-search" aria-label="Search" onclick="performSearch()"></i>
         <div id="suggestions" class="suggestions-dropdown"></div> <!-- Dropdown for suggestions -->
@@ -341,18 +344,16 @@
 </div>
 
 
-
-
 <!-- Profile and Gallery Section -->
 <div class="profile-container">
     <!-- Artist Profile -->
     <div class="profile">
         <div class="profile-header">
             <div class="profile-pic">
-                <img src="images\artists\photographers\art_4.jpeg" alt="Artist Profile Pic" />
+                <img src="images\artists\photographers\art_1.jpeg" alt="Artist Profile Pic" />
             </div>
             <div class="profile-info">
-                <h2>Ansel Adams</h2>
+                <h2>Aronja</h2>
                 <p>Artist Bio: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla condimentum quam vitae magna convallis, ac varius felis mollis.</p>
                 <div class="like-container">
                     <i class="fas fa-heart"></i>
@@ -362,18 +363,18 @@
         </div>
     </div>
 
-  <!-- Gallery Section -->
+    <!-- Gallery Section -->
 <div class="gallery">
-    <img src="images/artists/artist_painting/pain_1.jpeg" alt="Art 5" onclick="openModal(this.src)">
-    <img src="images/artists/artist_painting/pain_2.jpeg" alt="Art 6" onclick="openModal(this.src)">
-    <img src="images/artists/artist_painting/pain_3.jpeg" alt="Art 7" onclick="openModal(this.src)">
-    <img src="images/artists/artist_painting/pain_4.jpeg" alt="Art 8" onclick="openModal(this.src)">
-    <img src="images/artists/artist_painting/pain_1.jpeg" alt="Art 8" onclick="openModal(this.src)">
-    <img src="images/3.jpeg" alt="Art 8" onclick="openModal(this.src)">
-    <img src="images/7.webp" alt="Art 8" onclick="openModal(this.src)">
-    <img src="images/5.webp" alt="Art 8" onclick="openModal(this.src)">
-    <img src="images/13.webp" alt="Art 8" onclick="openModal(this.src)">
-    <img src="images/9.webp" alt="Art 8" onclick="openModal(this.src)">
+    <img src="images\artists\artist_painting\pain_1.jpeg" alt="Art 5" onclick="openModal(this.src)">
+    <img src="images\artists\artist_painting\pain_2.jpeg" alt="Art 6" onclick="openModal(this.src)">
+    <img src="images\artists\artist_painting\pain_3.jpeg" alt="Art 7" onclick="openModal(this.src)">
+    <img src="images\artists\artist_painting\pain_4.jpeg" alt="Art 8" onclick="openModal(this.src)">
+    <img src="images\artists\artist_painting\pain_1.jpeg" alt="Art 8" onclick="openModal(this.src)">
+    <img src="images\3.jpeg" alt="Art 8" onclick="openModal(this.src)">
+    <img src="images\7.webp" alt="Art 8" onclick="openModal(this.src)">
+    <img src="images\5.webp" alt="Art 8" onclick="openModal(this.src)">
+    <img src="images\13.webp" alt="Art 8" onclick="openModal(this.src)">
+    <img src="images\9.webp" alt="Art 8" onclick="openModal(this.src)">
 </div>
 
 <!-- Modal for Viewing Image in Full Screen -->
@@ -383,7 +384,7 @@
 
 
 <script>
- // Open modal with the clicked image
+  // Open modal with the clicked image
 function openModal(src) {
     const modal = document.getElementById('modal');
     const modalImg = document.getElementById('modalImg');
@@ -482,7 +483,7 @@ localStorage.removeItem('email');
 localStorage.removeItem('password');
 alert('You have been logged out');
 // Redirect to the login page or homepage
-window.location.href = 'index.html';
+window.location.href = 'index.php';
 }
 
 // Function to handle the login flow
@@ -490,7 +491,7 @@ function loginUser(username, password) {
 // Here we are assuming the username and password are valid. In real-world scenarios, you should validate them with your backend.
 localStorage.setItem('username', username);
 alert('Logged in successfully');
-window.location.href = 'nature.html'; // Redirect to the nature page or desired page after login
+window.location.href = 'nature.php'; // Redirect to the nature page or desired page after login
 }
 
 // Function to display the username after login
@@ -516,7 +517,7 @@ localStorage.setItem('username', username);
 localStorage.setItem('email', email);
 localStorage.setItem('password', password);
 alert('Signup successful');
-window.location.href = 'profile.html'; // Redirect to nature page after signup
+window.location.href = 'profile.php'; // Redirect to nature page after signup
 }
 
 </script>

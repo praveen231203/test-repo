@@ -1,3 +1,31 @@
+<?php
+include 'db.php';
+session_start();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $login_id = $_POST["login_id"]; // Can be username or email
+    $password = $_POST["password"];
+
+    // Check if user exists
+    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? OR email = ?");
+    $stmt->bind_param("ss", $login_id, $login_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+
+    if ($user && password_verify($password, $user["password"])) {
+        $_SESSION["user"] = $user["username"];
+        header("Location: profile.php"); // Redirect to the profile page
+        exit();
+    } else {
+        $error_message = "Invalid username/email or password.";
+    }
+
+    $stmt->close();
+    $conn->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +33,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
     <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS -->
-    <!-- Font Awesome for Icons -->
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
@@ -63,16 +90,6 @@
             color: #333;
             font-weight: 600;
             font-size: 1.8rem;
-        }
-
-        /* Rounded Image */
-        .profile-image {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 20px;
-            border: 3px solid #ff4d4d;
         }
 
         /* Form Group */
@@ -156,6 +173,12 @@
             color: #d40000;
         }
 
+        /* Error Message */
+        .error-message {
+            color: red;
+            margin-bottom: 20px;
+        }
+
         /* Fade In Animation */
         @keyframes fadeIn {
             from {
@@ -167,33 +190,33 @@
                 transform: translateY(0);
             }
         }
-
     </style>
 </head>
 <body>
 
 <!-- Home Button -->
 <div class="home-button">
-    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="index.php"><i class="fas fa-home"></i> Home</a>
 </div>
 
 <!-- Login Form -->
 <div class="container">
-    <!-- Profile Image -->
-    <img src="images\logo\logo.jpg" alt="Profile Image" class="profile-image">
     <h2>Login</h2>
-    <form id="loginForm">
+    <?php if (isset($error_message)): ?>
+        <div class="error-message"><?php echo $error_message; ?></div>
+    <?php endif; ?>
+    <form method="POST" action="">
         <!-- Username/Email -->
         <div class="form-group">
             <label for="username">Username or Email</label>
-            <input type="text" id="username" placeholder="Enter your username or email" required>
+            <input type="text" id="username" name="login_id" placeholder="Enter your username or email" required>
             <i class="fas fa-user"></i>
         </div>
 
         <!-- Password -->
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" id="password" placeholder="Enter your password" required>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
             <i class="fas fa-lock"></i>
         </div>
 
@@ -203,38 +226,16 @@
 
     <!-- Signup Option -->
     <div class="signup-option">
-        Don't have an account? <a href="signup.html">Sign Up</a>
+        Don't have an account? <a href="signup.php">Sign Up</a>
     </div>
 </div>
-
 <script>
-   
-    // Handle login form submission
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        // Get the values entered by the user
-        const usernameOrEmail = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-
-        // Get stored user data from localStorage
-        const storedEmail = localStorage.getItem('email');
-        const storedUsername = localStorage.getItem('username');
-        const storedPassword = localStorage.getItem('password');
-
-        // Check if the entered username/email matches the stored credentials
-        if (
-            (usernameOrEmail === storedUsername || usernameOrEmail === storedEmail) &&
-            password === storedPassword
-        ) {
-            alert('Login successful!');
-            // Redirect to a main page or dashboard
-            window.location.href = 'profile.html';
-        } else {
-            // Invalid credentials
-            alert('Invalid credentials, please try again!');
-        }
-    });
+    if ($user && password_verify($password, $user["password"])) {
+    $_SESSION["user"] = $user["username"]; // Store username in session
+    header("Location: profile.php"); // Redirect to the profile page
+    exit();
+}
 </script>
+
 </body>
 </html>

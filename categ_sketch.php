@@ -313,18 +313,18 @@
             <i class="fa fa-search"></i>
         </div>
         <div class="icon-container">
-            <button onclick="window.location.href='index.html'"><i class="fa fa-home"></i> Home</button>
-            <button onclick="window.location.href='login.html'"><i class="fa fa-user"></i> Login</button>
-            <button onclick="window.location.href='signup.html'"><i class="fa fa-user-plus"></i> Signup</button>
+            <button onclick="window.location.href='index.php'"><i class="fa fa-home"></i> Home</button>
+            <button onclick="window.location.href='login.php'"><i class="fa fa-user"></i> Login</button>
+            <button onclick="window.location.href='signup.php'"><i class="fa fa-user-plus"></i> Signup</button>
         </div>
     </div>
 
     <!-- Galleries Section -->
     <section class="galleries">
-        <h2>Paintings</h2>
+        <h2>Sketch works</h2>
         <div class="gallery-container">
             <div class="gallery-item">
-                <img src="images\catagories\paint\art1.jpeg" alt="Gallery 1">
+                <img src="images\catagories\sketch\ske1.jpeg" alt="Gallery 1">
                 <div class="gallery-info">
                     <h3>Nature Photography</h3>
                     <span>150 Likes</span>
@@ -332,7 +332,7 @@
                 </div>
             </div>
             <div class="gallery-item">
-                <img src="images\catagories\paint\art2.jpeg" alt="Gallery 2">
+                <img src="images\catagories\sketch\ske2.jpeg" alt="Gallery 2">
                 <div class="gallery-info">
                     <h3>Abstract Art</h3>
                     <span>200 Likes</span>
@@ -341,7 +341,7 @@
             </div>
 
             <div class="gallery-item">
-                <img src="images\catagories\paint\art3.jpeg" alt="Gallery 2">
+                <img src="images\catagories\sketch\ske3.jpeg" alt="Gallery 2">
                 <div class="gallery-info">
                     <h3>Abstract Art</h3>
                     <span>200 Likes</span>
@@ -349,7 +349,7 @@
                 </div>
             </div>
             <div class="gallery-item">
-                <img src="images\catagories\paint\art4.jpeg" alt="Gallery 2">
+                <img src="images\catagories\sketch\ske4.jpeg" alt="Gallery 2">
                 <div class="gallery-info">
                     <h3>Abstract Art</h3>
                     <span>200 Likes</span>
@@ -357,7 +357,7 @@
                 </div>
             </div>
             <div class="gallery-item">
-                <img src="images\catagories\paint\art5.jpeg" alt="Gallery 2">
+                <img src="images\catagories\sketch\ske5.jpeg" alt="Gallery 2">
                 <div class="gallery-info">
                     <h3>Abstract Art</h3>
                     <span>200 Likes</span>
@@ -377,21 +377,21 @@
             <div class="footer-section">
                 <h3 class="footer-title">Quick Links</h3>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.php">Home</a></li>
                     <li class="dropdown">
                         <a href="#">Categories <i class="fa fa-chevron-down dropdown-arrow"></i></a>
                         <div class="dropdown-content">
-                            <a href="categ_nature.html">Web Design</a>
-                            <a href="categ_paint.html">GrapNAVEENc Design</a>
-                            <a href="categ_sketch.html">Marketing</a>
+                            <a href="categ_nature.php">Web Design</a>
+                            <a href="categ_paint.php">GrapNAVEENc Design</a>
+                            <a href="categ_sketch.php">Marketing</a>
                         </div>
                     </li>
                     <li class="dropdown">
                         <a href="#">Artist <i class="fa fa-chevron-down dropdown-arrow"></i></a>
                         <div class="dropdown-content">
-                            <a href="artist_1.html">Painter</a>
-                            <a href="artist_2.html">Sculptor</a>
-                            <a href="artist_3.html">Digital Artist</a>
+                            <a href="artist_1.php">Painter</a>
+                            <a href="artist_2.php">Sculptor</a>
+                            <a href="artist_3.php">Digital Artist</a>
                         </div>
                     </li>
                     <li><a href="#">Contact</a></li>

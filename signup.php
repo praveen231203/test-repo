@@ -1,12 +1,62 @@
+<?php
+include 'db.php';
+
+$error_message = ""; // Initialize an error message variable
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST["username"];
+    $email = $_POST["email"];
+    $phone = $_POST["phone"];
+    $password = $_POST["password"];
+    $confirm_password = $_POST["confirm_password"];
+
+    // Check if passwords match
+    if ($password !== $confirm_password) {
+        $error_message = "Passwords do not match!";
+    } else {
+        // Check if username or email already exists
+        $check_user = $conn->prepare("SELECT * FROM users WHERE username = ? OR email = ?");
+        $check_user->bind_param("ss", $username, $email);
+        $check_user->execute();
+        $result = $check_user->get_result();
+
+        if ($result->num_rows > 0) {
+            $error_message = "Username or Email already exists. Try another one.";
+        } else {
+            // Hash the password for security
+            $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+            // Prepare the insert statement
+            $stmt = $conn->prepare("INSERT INTO users (username, email, phone, password) VALUES (?, ?, ?, ?)");
+            if ($stmt) { // Check if the statement was prepared successfully
+                $stmt->bind_param("ssss", $username, $email, $phone, $hashed_password);
+
+                if ($stmt->execute()) {
+                    // Redirect to login page after successful signup
+                    header("Location: login.php");
+                    exit();
+                } else {
+                    $error_message = "Error: " . $conn->error;
+                }
+                $stmt->close(); // Close the statement
+            } else {
+                $error_message = "Error preparing statement: " . $conn->error;
+            }
+        }
+
+        $check_user->close();
+        $conn->close();
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up Page</title>
-    <!-- Font Awesome for Icons -->
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         /* Reset CSS */
@@ -163,45 +213,45 @@
 
 <!-- Home Button -->
 <div class="home-button">
-    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="index.php"><i class="fas fa-home"></i> Home</a>
 </div>
 
 <!-- Signup Form -->
 <div class="container">
     <h2>Sign Up</h2>
-    <form id="signupForm">
+    <form method="POST" action="">
         <!-- Username -->
         <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" id="username" placeholder="Enter your username" required>
+            <input type="text" id="username" name="username" placeholder="Enter your username" required>
             <i class="fas fa-user"></i>
         </div>
 
         <!-- Email -->
         <div class="form-group">
             <label for="email">Email ID</label>
-            <input type="email" id="email" placeholder="Enter your email" required>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
             <i class="fas fa-envelope"></i>
         </div>
 
         <!-- Phone Number -->
         <div class="form-group">
             <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" placeholder="Enter your phone number" required>
+            <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
             <i class="fas fa-phone"></i>
         </div>
 
         <!-- Password -->
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" id="password" placeholder="Enter your password" required>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
             <i class="fas fa-lock"></i>
         </div>
 
         <!-- Confirm Password -->
         <div class="form-group">
             <label for="confirm-password">Confirm Password</label>
-            <input type="password" id="confirm-password" placeholder="Confirm your password" required>
+            <input type="password" id="confirm-password" name="confirm_password" placeholder="Confirm your password" required>
             <i class="fas fa-lock"></i>
         </div>
 
@@ -211,39 +261,15 @@
 
     <!-- Login Option -->
     <div class="login-option">
-        Already have an account? <a href="login.html">Login</a>
+        Already have an account? <a href="login.php">Login</a>
     </div>
 </div>
 
-<script>
-    // Handle form submission
-    document.getElementById('signupForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        // Get the values entered by the user
-        const username = document.getElementById('username').value;
-        const email = document.getElementById('email').value;
-        const phone = document.getElementById('phone').value;
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirm-password').value;
-
-        // Check if passwords match
-        if (password !== confirmPassword) {
-            alert('Passwords do not match!');
-            return;
-        }
-
-        // Store data in localStorage
-        localStorage.setItem('username', username);
-        localStorage.setItem('email', email);
-        localStorage.setItem('phone', phone);
-        localStorage.setItem('password', password);
-
-        // Redirect to login page
-        alert('Sign Up successful!');
-        window.location.href = 'login.html';
-    });
-</script>
+<?php if ($error_message): ?>
+    <script>
+        alert("<?php echo $error_message; ?>");
+    </script>
+<?php endif; ?>
 
 </body>
 </html>

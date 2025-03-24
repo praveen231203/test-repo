@@ -22,8 +22,9 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     
     <style>
-       /* General Reset */
-       * {
+       
+/* General Reset */
+* {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -200,6 +201,7 @@
     background-color: #f0f0f0; /* Highlight on hover */
 }
 
+
         /* Main container */
         .profile-container {
             display: flex;
@@ -340,18 +342,17 @@
 
 
 
+
 <!-- Profile and Gallery Section -->
-<div class="profile-container">
-  <!-- Profile and Gallery Section -->
 <div class="profile-container">
     <!-- Artist Profile -->
     <div class="profile">
         <div class="profile-header">
             <div class="profile-pic">
-                <img src="images\artists\photographers\art_3.jpeg" alt="Artist Profile Pic" />
+                <img src="images\artists\photographers\art_4.jpeg" alt="Artist Profile Pic" />
             </div>
             <div class="profile-info">
-                <h2>Loish</h2>
+                <h2>Ansel Adams</h2>
                 <p>Artist Bio: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla condimentum quam vitae magna convallis, ac varius felis mollis.</p>
                 <div class="like-container">
                     <i class="fas fa-heart"></i>
@@ -361,9 +362,9 @@
         </div>
     </div>
 
-   <!-- Gallery Section -->
+  <!-- Gallery Section -->
 <div class="gallery">
-    <img src="images/13.webp" alt="Art 5" onclick="openModal(this.src)">
+    <img src="images/artists/artist_painting/pain_1.jpeg" alt="Art 5" onclick="openModal(this.src)">
     <img src="images/artists/artist_painting/pain_2.jpeg" alt="Art 6" onclick="openModal(this.src)">
     <img src="images/artists/artist_painting/pain_3.jpeg" alt="Art 7" onclick="openModal(this.src)">
     <img src="images/artists/artist_painting/pain_4.jpeg" alt="Art 8" onclick="openModal(this.src)">
@@ -382,8 +383,7 @@
 
 
 <script>
-   
-// Open modal with the clicked image
+ // Open modal with the clicked image
 function openModal(src) {
     const modal = document.getElementById('modal');
     const modalImg = document.getElementById('modalImg');
@@ -396,6 +396,7 @@ document.getElementById('modal').addEventListener('click', function () {
     const modal = document.getElementById('modal');
     modal.style.display = 'none';
 });
+
     // Function for scrolling to content
     function scrollToContent() {
             document.getElementById("gallery").scrollIntoView({ behavior: "smooth" });
@@ -481,7 +482,7 @@ localStorage.removeItem('email');
 localStorage.removeItem('password');
 alert('You have been logged out');
 // Redirect to the login page or homepage
-window.location.href = 'index.html';
+window.location.href = 'index.php';
 }
 
 // Function to handle the login flow
@@ -489,7 +490,7 @@ function loginUser(username, password) {
 // Here we are assuming the username and password are valid. In real-world scenarios, you should validate them with your backend.
 localStorage.setItem('username', username);
 alert('Logged in successfully');
-window.location.href = 'nature.html'; // Redirect to the nature page or desired page after login
+window.location.href = 'nature.php'; // Redirect to the nature page or desired page after login
 }
 
 // Function to display the username after login
@@ -515,7 +516,7 @@ localStorage.setItem('username', username);
 localStorage.setItem('email', email);
 localStorage.setItem('password', password);
 alert('Signup successful');
-window.location.href = 'profile.html'; // Redirect to nature page after signup
+window.location.href = 'profile.php'; // Redirect to nature page after signup
 }
 
 </script>

@@ -1,28 +1,26 @@
+<?php
+session_start();
+if (!isset($_SESSION["user"])) {
+    header("Location: login.php"); // Redirect to login if not logged in
+    exit();
+}
+
+$username = $_SESSION["user"]; // Get the username from the session
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Creative Horizon</title>
-  <!-- Font Awesome for Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
-<!-- Swiper CSS for Carousel -->
-<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-<!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
-<!-- Bootstrap JS -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
- <style>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
         /* General Reset */
         * {
             margin: 0;
@@ -896,7 +894,6 @@
     height: auto;
 }
 
-
     </style>
 </head>
 <body>
@@ -917,10 +914,12 @@
             <div class="user-container">
                 <!-- Marquee for Welcome Message -->
                 <marquee class="welcome-message" id="welcome-message" scrollamount="10" direction="left">
-                    Welcome, User! 
-                </marquee>
-                <!-- Logout Button -->
-                <button class="logout-button" onclick="logoutUser()">Logout <i class="fa fa-sign-out-alt"></i></button>
+                <div class="welcome-message" id="welcome-message">
+    Welcome, <?php echo htmlspecialchars($username); ?>!
+</marquee>
+</div>
+
+<button class="logout-btn" onclick="logoutUser ()">Logout</button>
                 <!-- Purchase Icon -->
                 <div class="purchase-icon" aria-label="Shopping Cart">
                     <i class="fa fa-shopping-cart"></i>
@@ -934,17 +933,17 @@
                 <li class="dropdown">
                     <a href="#">Categories <i class="fa fa-chevron-down dropdown-arrow"></i></a>
                     <div class="dropdown-content">
-                        <a href="categ_nature.html">Nature</a>
-                        <a href="categ_paint.html">Paint</a>
-                        <a href="categ_sketch.html">Sketch</a>
+                        <a href="categ_nature.php">Nature</a>
+                        <a href="categ_paint.php">Paint</a>
+                        <a href="categ_sketch.php">Sketch</a>
                     </div>
                 </li>
                 <li class="dropdown">
                     <a href="#">Artist <i class="fa fa-chevron-down dropdown-arrow"></i></a>
                     <div class="dropdown-content">
-                        <a href="artist_1.html">Painter</a>
-                        <a href="artist_2.html">Sculptor</a>
-                        <a href="artist_3.html">Digital Artist</a>
+                        <a href="artist_1.php">Painter</a>
+                        <a href="artist_2.php">Sculptor</a>
+                        <a href="artist_3.php">Digital Artist</a>
                     </div>
                 </li>
                 <li><a href="#">Contact</a></li>
@@ -1080,22 +1079,7 @@
             <p class="price">$19.99</p>
             <a href="images/design-template.zip" download class="buy-btn">Pay Now</a>
         </div>
-    </div>
-      <!-- Art Gallery Section -->
-  <section id="profiles" class="profile-section">
-    <div class="container section-title">
-      <h2>Art Gallery</h2>
-      <p>Discover the masterpieces of legendary artists from around the world</p>
-    </div>
-
-    <div class="container">
-      <div class="swiper">
-        <div class="swiper-wrapper">
-
-          <!-- Artist Item 1 -->
-          <div class="swiper-slide">
-            <div class="profile-item">
-              <img src="https://via.placeholder.com/140" class="profile-img" alt="Pablo Picasso">
+<img src="https://via.placeholder.com/140" class="profile-img" alt="Pablo Picasso">
               <h3>Pablo Picasso</h3>
               <h4>Cubism Pioneer</h4>
               <p>Renowned for transforming modern art with groundbreaking styles and techniques, Picasso redefined artistic expression.</p>
@@ -1208,21 +1192,21 @@
             <div class="footer-section">
                 <h3 class="footer-title">Quick Links</h3>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.php">Home</a></li>
                     <li class="dropdown">
                         <a href="#">Categories <i class="fa fa-chevron-down dropdown-arrow"></i></a>
                         <div class="dropdown-content">
-                            <a href="categ_nature.html">Web Design</a>
-                            <a href="categ_paint.html">Graphic Design</a>
-                            <a href="categ_sketch.html">Marketing</a>
+                            <a href="categ_nature.php">Web Design</a>
+                            <a href="categ_paint.php">Graphic Design</a>
+                            <a href="categ_sketch.php">Marketing</a>
                         </div>
                     </li>
                     <li class="dropdown">
                         <a href="#">Artist <i class="fa fa-chevron-down dropdown-arrow"></i></a>
                         <div class="dropdown-content">
-                            <a href="artist_1.html">Painter</a>
-                            <a href="artist_2.html">Sculptor</a>
-                            <a href="artist_3.html">Digital Artist</a>
+                            <a href="artist_1.php">Painter</a>
+                            <a href="artist_2.php">Sculptor</a>
+                            <a href="artist_3.php">Digital Artist</a>
                         </div>
                     </li>
                     <li><a href="#">Contact</a></li>
@@ -1374,54 +1358,16 @@ function selectSuggestion(suggestion) {
       },
     });
   });
-  // Function to logout the user
-function logoutUser() {
-// Clear the stored user data from local storage
-localStorage.removeItem('username');
-localStorage.removeItem('email');
-localStorage.removeItem('password');
-alert('You have been logged out');
-// Redirect to the login page or homepage
-window.location.href = 'index.html';
-}
-
-// Function to handle the login flow
-function loginUser(username, password) {
-// Here we are assuming the username and password are valid. In real-world scenarios, you should validate them with your backend.
-localStorage.setItem('username', username);
-alert('Logged in successfully');
-window.location.href = 'nature.html'; // Redirect to the nature page or desired page after login
-}
-// Function to display the username after login
-function displayUsername() {
-    const username = localStorage.getItem('username');
-    const welcomeMessage = document.getElementById('welcome-message');
-    if (username) {
-        welcomeMessage.textContent = `Welcome, ${username}!`; // Update the welcome message
-        document.getElementById('welcome-message').style.display = 'block';
-        document.getElementById('logout-btn').style.display = 'block'; // Show logout button if the user is logged in
-    } else {
-        welcomeMessage.textContent = 'Welcome, User!'; // Default message if no username
-        document.getElementById('logout-btn').style.display = 'none'; // Hide logout button if not logged in
+  function logoutUser () {
+        // Clear the stored user data from local storage
+        localStorage.removeItem('username');
+        localStorage.removeItem('email');
+        localStorage.removeItem('password');
+        
+        // Redirect to the logout script
+        window.location.href = 'logout.php'; // Redirect to logout script
     }
-}
-
-
-// Display the username on page load
-document.addEventListener('DOMContentLoaded', displayUsername);
-
-// Function to handle signup
-function signupUser(username, email, password) {
-// Save the signup details to local storage (or send to backend for real authentication)
-localStorage.setItem('username', username);
-localStorage.setItem('email', email);
-localStorage.setItem('password', password);
-alert('Signup successful');
-window.location.href = 'profile.html'; // Redirect to nature page after signup
-}
-
-
-    const images = [
+     const images = [
         { src: "images/4.webp", description: "Boat on calm water, showcasing serenity." },
         { src: "images/9.webp", description: "A wintry mountain landscape with snow-covered peaks." },
         { src: "images/5.webp", description: "Mountains surrounded by clouds, a breathtaking view." },
@@ -1517,3 +1463,4 @@ window.location.href = 'profile.html'; // Redirect to nature page after signup
     </script>
 </body>
 </html>
+

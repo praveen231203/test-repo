@@ -455,7 +455,7 @@
     <!-- Header Section -->
     <div class="header-section">
         <div class="logo">
-            <a href="index.html" class="logo-link">
+            <a href="index.php" class="logo-link">
             <div class="logo-circle">
                 <img src="images/logo/logo.jpg" alt="Art Gallery Logo">
             </a>
@@ -557,21 +557,21 @@
                 <div class="footer-section">
                     <h3 class="footer-title">Quick Links</h3>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.php">Home</a></li>
                         <li class="dropdown">
                             <a href="#">Categories <i class="fa fa-chevron-down dropdown-arrow"></i></a>
                             <div class="dropdown-content">
-                                <a href="categ_nature.html">Web Design</a>
-                                <a href="categ_paint.html">Graphic Design</a>
-                                <a href="categ_sketch.html">Marketing</a>
+                                <a href="categ_nature.php">Web Design</a>
+                                <a href="categ_paint.php">Graphic Design</a>
+                                <a href="categ_sketch.php">Marketing</a>
                             </div>
                         </li>
                         <li class="dropdown">
                             <a href="#">Artist <i class="fa fa-chevron-down dropdown-arrow"></i></a>
                             <div class="dropdown-content">
-                                <a href="artist_1.html">Painter</a>
-                                <a href="artist_2.html">Sculptor</a>
-                                <a href="artist_3.html">Digital Artist</a>
+                                <a href="artist_1.php">Painter</a>
+                                <a href="artist_2.php">Sculptor</a>
+                                <a href="artist_3.php">Digital Artist</a>
                             </div>
                         </li>
                         <li><a href="#">Contact</a></li>
@@ -647,7 +647,7 @@
                 const modalDescription = document.getElementById('modalDescription');
         
                 modalImg.src = images[currentIndex].src;
-                modalTitle.innerText = Image ${currentIndex + 1};
+                modalTitle.innerText = Image_${currentIndex + 1};
                 modalDescription.innerText = images[currentIndex].description;
             }
         

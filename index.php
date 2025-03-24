@@ -1,3 +1,58 @@
+<?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/autoload.php'; // Load PHPMailer
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["contact_submit"])) {
+    
+    // Debugging: Check if form data is received
+    if (!isset($_POST["name"]) || !isset($_POST["email"]) || !isset($_POST["subject"]) || !isset($_POST["message"])) {
+        die("Error: Form data not received.");
+    }
+
+    $name = trim($_POST["name"]);
+    $email = trim($_POST["email"]);
+    $subject = trim($_POST["subject"]);
+    $message = trim($_POST["message"]);
+
+    // Validate email
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        die("Error: Invalid email format.");
+    }
+
+    $mail = new PHPMailer(true); // Create a new PHPMailer instance
+
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'shubhamsrivastav861@gmail.com'; // Replace with your Gmail
+        $mail->Password = 'kmns ifet bvjk dlrw';   // Replace with your Google App Password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
+
+        $mail->setFrom($email, $name); // Sender
+        $mail->addAddress('shubhamsrivastav8088@gmail.com'); // Your email to receive messages
+
+        $mail->Subject = $subject;
+        $mail->Body = "Name: $name\nEmail: $email\nSubject: $subject\n\nMessage:\n$message";
+
+        if ($mail->send()) {
+            echo "<script>alert('Message sent successfully!');</script>";
+        } else {
+            echo "<script>alert('Email sending failed!');</script>";
+        }
+    } catch (Exception $e) {
+        echo "<script>alert('Email could not be sent. Mailer Error: {$mail->ErrorInfo}');</script>";
+    }
+} else {
+    echo "<script>alert('Invalid request! Please submit the form.');</script>";
+}
+?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -879,7 +934,7 @@ h2::before {
      <!-- Header Section -->
      <div class="header-section">
         <div class="logo">
-            <a href="index.html" class="logo-link">
+            <a href="index.php" class="logo-link">
                 <div class="logo-circle">
                     <img src="images/logo/logo.jpg" alt="Art Gallery Logo">
                 </div>
@@ -891,13 +946,13 @@ h2::before {
             <i class="fa fa-search" aria-label="Search" onclick="performSearch()"></i>
         </div>
         <div class="icon-container">
-            <button aria-label="Login" onclick="window.location.href='login.html';">
+            <button aria-label="Login" onclick="window.location.href='login.php';">
                 <i class="fa fa-user"></i> Login
             </button>
-            <button aria-label="Signup" onclick="window.location.href='signup.html';">
+            <button aria-label="Signup" onclick="window.location.href='signup.php';">
                 <i class="fa fa-user-plus"></i> Signup
             </button>
-            <div class="premium-icon" onclick="window.location.href='cart.html';">
+            <div class="premium-icon" onclick="window.location.href='cart.php';">
                 <i class="fa fa-crown"></i> Get Premium
             </div>
             
@@ -908,21 +963,21 @@ h2::before {
     <div class="navigation-bar">
         <div class="nav-container">
             <ul class="nav-menu">
-                <li><a href="index.html">Home</a></li>
+                <li><a href="index.php">Home</a></li>
                 <li class="dropdown">
                     <a href="#">Categories <i class="fa fa-chevron-down dropdown-arrow"></i></a>
                     <div class="dropdown-content">
-                        <a href="categ_nature.html">Nature</a>
-                        <a href="categ_paint.html">Paint</a>
-                        <a href="categ_sketch.html">Sketch</a>
+                        <a href="categ_nature.php">Nature</a>
+                        <a href="categ_paint.php">Paint</a>
+                        <a href="categ_sketch.php">Sketch</a>
                     </div>
                 </li>
                 <li class="dropdown">
                     <a href="#">Artist <i class="fa fa-chevron-down dropdown-arrow"></i></a>
                     <div class="dropdown-content">
-                        <a href="artist_1.html">Painter</a>
-                        <a href="artist_2.html">Sculptor</a>
-                        <a href="artist_3.html">Digital Artist</a>
+                        <a href="artist_1.php">Painter</a>
+                        <a href="artist_2.php">Sculptor</a>
+                        <a href="artist_3.php">Digital Artist</a>
                     </div>
                 </li>
                 <li><a href="#">Contact</a></li>
@@ -1042,7 +1097,7 @@ h2::before {
             <h3>Nature Photography</h3>
             <p>Download 91808gh-quality nature photographs for personal or commercial use.</p>
             <p class="price">$9.99</p>
-            <a href="images/6.webp" download class="buy-btn">Pay Now</a>
+            <a href="images/6.webp" class="buy-btn">Pay Now</a>
         </div>
         <div class="portfolio-card">
             <img src="images\3.jpeg" alt="Abstract Artwork">
@@ -1102,19 +1157,20 @@ h2::before {
     <!--Contact us-->
     <div class="contact-container">
         <div class="contact-form">
+        <section id="contact">
             <h1>Contact Us!</h1>
             <p>Fill up the form below to send us a message.</p>
-            <form>
-                <input type="text" placeholder="Name" required>
-                <input type="email" placeholder="Email" required>
-                <input type="text" placeholder="Subject" required>
-                <textarea placeholder="Type your message here..." required></textarea>
-                <button type="submit">Send</button>
-                <button type="reset" class="reset">Reset</button>
+            <form action="index.php" method="POST">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <input type="text" name="subject" placeholder="Subject" required>
+        <textarea name="message" placeholder="Your Message" required></textarea>
+        <button type="submit" name="contact_submit">Send Message</button>
+               
             </form>
-            <div class="background-shadow"></div>
+            </section>
         </div>
-        </div>
+    </div>
 
     <!-- Footer Section -->
     <div class="footer">
@@ -1126,21 +1182,21 @@ h2::before {
             <div class="footer-section">
                 <h3 class="footer-title">Quick Links</h3>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.php">Home</a></li>
                     <li class="dropdown">
                         <a href="#">Categories <i class="fa fa-chevron-down dropdown-arrow"></i></a>
                         <div class="dropdown-content">
-                            <a href="categ_nature.html">Web Design</a>
-                            <a href="categ_paint.html">Graphic Design</a>
-                            <a href="categ_sketch.html">Marketing</a>
+                            <a href="categ_nature.php">Web Design</a>
+                            <a href="categ_paint.php">Graphic Design</a>
+                            <a href="categ_sketch.php">Marketing</a>
                         </div>
                     </li>
                     <li class="dropdown">
                         <a href="#">Artist <i class="fa fa-chevron-down dropdown-arrow"></i></a>
                         <div class="dropdown-content">
-                            <a href="artist_1.html">Painter</a>
-                            <a href="artist_2.html">Sculptor</a>
-                            <a href="artist_3.html">Digital Artist</a>
+                            <a href="artist_1.php">Painter</a>
+                            <a href="artist_2.php">Sculptor</a>
+                            <a href="artist_3.php">Digital Artist</a>
                         </div>
                     </li>
                     <li><a href="#">Contact</a></li>
