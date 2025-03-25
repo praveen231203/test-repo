@@ -6,21 +6,39 @@ if (!isset($_SESSION["user"])) {
 }
 
 $username = $_SESSION["user"]; // Get the username from the session
-?>
+if (isset($_POST['logout'])) {
+    session_destroy(); // Destroy the session
+    unset($_SESSION["user"]); // Unset session variable
+    header("Location: index.php"); // Redirect to login page
+    exit();
+}
 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Creative Horizon</title>
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-<style>
+  <!-- Font Awesome for Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- Swiper CSS for Carousel -->
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ <style>
         /* General Reset */
         * {
             margin: 0;
@@ -894,6 +912,7 @@ $username = $_SESSION["user"]; // Get the username from the session
     height: auto;
 }
 
+
     </style>
 </head>
 <body>
@@ -914,12 +933,15 @@ $username = $_SESSION["user"]; // Get the username from the session
             <div class="user-container">
                 <!-- Marquee for Welcome Message -->
                 <marquee class="welcome-message" id="welcome-message" scrollamount="10" direction="left">
-                <div class="welcome-message" id="welcome-message">
-    Welcome, <?php echo htmlspecialchars($username); ?>!
-</marquee>
-</div>
+                    Welcome, <?php echo htmlspecialchars($username); ?>!
+                </marquee>
+                <!-- Logout Button -->
+                <form method="post">
+    <button type="submit" name="logout" class="logout-button">
+        Logout <i class="fa fa-sign-out-alt"></i>
+    </button>
+</form>
 
-<button class="logout-btn" onclick="logoutUser ()">Logout</button>
                 <!-- Purchase Icon -->
                 <div class="purchase-icon" aria-label="Shopping Cart">
                     <i class="fa fa-shopping-cart"></i>
@@ -1079,7 +1101,22 @@ $username = $_SESSION["user"]; // Get the username from the session
             <p class="price">$19.99</p>
             <a href="images/design-template.zip" download class="buy-btn">Pay Now</a>
         </div>
-<img src="https://via.placeholder.com/140" class="profile-img" alt="Pablo Picasso">
+    </div>
+      <!-- Art Gallery Section -->
+  <section id="profiles" class="profile-section">
+    <div class="container section-title">
+      <h2>Art Gallery</h2>
+      <p>Discover the masterpieces of legendary artists from around the world</p>
+    </div>
+
+    <div class="container">
+      <div class="swiper">
+        <div class="swiper-wrapper">
+
+          <!-- Artist Item 1 -->
+          <div class="swiper-slide">
+            <div class="profile-item">
+              <img src="https://via.placeholder.com/140" class="profile-img" alt="Pablo Picasso">
               <h3>Pablo Picasso</h3>
               <h4>Cubism Pioneer</h4>
               <p>Renowned for transforming modern art with groundbreaking styles and techniques, Picasso redefined artistic expression.</p>
@@ -1180,7 +1217,7 @@ $username = $_SESSION["user"]; // Get the username from the session
             </form>
             <div class="background-shadow"></div>
         </div>
-        </div>
+    </div>
 
     <!-- Footer Section -->
     <div class="footer">
@@ -1358,16 +1395,40 @@ function selectSuggestion(suggestion) {
       },
     });
   });
-  function logoutUser () {
-        // Clear the stored user data from local storage
-        localStorage.removeItem('username');
-        localStorage.removeItem('email');
-        localStorage.removeItem('password');
-        
-        // Redirect to the logout script
-        window.location.href = 'logout.php'; // Redirect to logout script
+ 
+
+// Function to handle the login flow
+function loginUser(username, password) {
+// Here we are assuming the username and password are valid. In real-world scenarios, you should validate them with your backend.
+localStorage.setItem('username', username);
+alert('Logged in successfully');
+window.location.href = 'nature.php'; // Redirect to the nature page or desired page after login
+}
+// Function to display the username after login
+    if (username) {
+        document.getElementById('welcome-message').style.display = 'block';
+        document.getElementById('logout-btn').style.display = 'block'; // Show logout button if the user is logged in
+    } else {
+        welcomeMessage.textContent = 'Welcome, User!'; // Default message if no username
+        document.getElementById('logout-btn').style.display = 'none'; // Hide logout button if not logged in
     }
-     const images = [
+
+
+
+// Display the username on page load
+
+// Function to handle signup
+function signupUser(username, email, password) {
+// Save the signup details to local storage (or send to backend for real authentication)
+localStorage.setItem('username', username);
+localStorage.setItem('email', email);
+localStorage.setItem('password', password);
+alert('Signup successful');
+window.location.href = 'profile.php'; // Redirect to nature page after signup
+}
+
+
+    const images = [
         { src: "images/4.webp", description: "Boat on calm water, showcasing serenity." },
         { src: "images/9.webp", description: "A wintry mountain landscape with snow-covered peaks." },
         { src: "images/5.webp", description: "Mountains surrounded by clouds, a breathtaking view." },
@@ -1405,8 +1466,8 @@ function selectSuggestion(suggestion) {
         if (images[currentIndex]) {
             const { src, description } = images[currentIndex];
             modalImg.src = src;
-            modalImg.alt = description || `Image ${currentIndex + 1}`;
-            modalTitle.innerText = `Image ${currentIndex + 1}`;
+            modalImg.alt = description ||' Image ${currentIndex + 1}';
+            modalTitle.innerText =' Image ${currentIndex + 1}';
             modalDescription.innerText = description;
         } else {
             console.error('Invalid image index.');
@@ -1425,7 +1486,7 @@ function selectSuggestion(suggestion) {
         if (images[currentIndex]) {
             const link = document.createElement('a');
             link.href = images[currentIndex].src;
-            link.download = `Image_${currentIndex + 1}.jpg`;
+            link.download = 'Image_${currentIndex + 1}.jpg';
             link.click();
         } else {
             console.error('Invalid image index.');
@@ -1438,7 +1499,7 @@ function selectSuggestion(suggestion) {
         if (navigator.share) {
             navigator.share({
                 title: 'Check out this image!',
-                text: `Look at this amazing artwork: ${images[currentIndex].description}`,
+                text: 'Look at this amazing artwork: ${images[currentIndex].description}',
                 url: imageUrl,
             }).catch(error => console.error('Error sharing:', error));
         } else {
@@ -1463,4 +1524,3 @@ function selectSuggestion(suggestion) {
     </script>
 </body>
 </html>
-

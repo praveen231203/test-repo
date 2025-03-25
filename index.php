@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["contact_submit"])) {
         echo "<script>alert('Email could not be sent. Mailer Error: {$mail->ErrorInfo}');</script>";
     }
 } else {
-    echo "<script>alert('Invalid request! Please submit the form.');</script>";
+    //*echo "<script>alert('Invalid request! Please submit the form.');</script>";
 }
 ?>
 

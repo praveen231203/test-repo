@@ -229,12 +229,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         Don't have an account? <a href="signup.php">Sign Up</a>
     </div>
 </div>
-<script>
-    if ($user && password_verify($password, $user["password"])) {
-    $_SESSION["user"] = $user["username"]; // Store username in session
-    header("Location: profile.php"); // Redirect to the profile page
-    exit();
-}
 </script>
 
 </body>
