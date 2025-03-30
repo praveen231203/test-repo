@@ -713,18 +713,28 @@ h2::before {
 .feedback-item:nth-child(6) {
     animation-delay: 1s;
 }
-/*contact-page*/
+//*contact-page*/
 .contact-container {
-    width: 90%;
-    max-width: 550px;
-    margin: auto;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ff7eb3, #ff758c);
+    padding: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .contact-form {
-    background: linear-gradient(45deg, #4f4feb, #ccafe3);
-    padding: 20px 30px;
-    border-radius: 10px;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2), -5px -5px 15px rgba(255, 255, 255, 0.1);
+    width: 45%;
+    max-width: 650px;
+    padding: 30px;
+    border-radius: 15px;
+    background: linear-gradient(45deg, #ff4e50, #fc913a);
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.4), -10px -10px 30px rgba(255, 255, 255, 0.3);
     text-align: center;
     position: relative;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -732,73 +742,77 @@ h2::before {
 
 .contact-form:hover {
     transform: translateY(-10px);
-    box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.3), -10px -10px 25px rgba(255, 255, 255, 0.2);
+    box-shadow: 14px 14px 35px rgba(0, 0, 0, 0.5), -14px -14px 35px rgba(255, 255, 255, 0.3);
 }
 
 .contact-form h1 {
     color: #fff;
-    margin-bottom: 10px;
-    font-size: 24px;
+    margin-bottom: 12px;
+    font-size: 26px;
+    font-weight: bold;
 }
 
 .contact-form p {
     color: #eee;
-    margin-bottom: 20px;
-    font-size: 14px;
+    margin-bottom: 18px;
+    font-size: 16px;
 }
 
 .contact-form input, .contact-form textarea {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     margin-bottom: 15px;
+    font-size: 16px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     box-sizing: border-box;
-    box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.2), inset -3px -3px 6px rgba(255, 255, 255, 0.1);
+    box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.3), inset -4px -4px 8px rgba(255, 255, 255, 0.1);
     transition: box-shadow 0.3s ease;
 }
 
 .contact-form input:focus, .contact-form textarea:focus {
-    box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.4), inset -1px -1px 2px rgba(255, 255, 255, 0.2);
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5), inset -2px -2px 5px rgba(255, 255, 255, 0.2);
     outline: none;
 }
 
 .contact-form textarea {
-    height: 100px;
+    height: 120px;
     resize: none;
 }
 
 .contact-form button {
-    padding: 10px 20px;
-    background-color: #4B6FEE;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #ff3d4f;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
 }
 
 .contact-form button:hover {
-    background-color: #354FC7;
+    background-color: #d62e3e;
     transform: scale(1.05);
 }
 
 .contact-form .reset {
-    background-color: #FF4E56;
+    background-color: #ff6659;
 }
 
 .contact-form .reset:hover {
-    background-color: #CC3B42;
+    background-color: #cc5045;
 }
 
 .background-shadow {
     position: absolute;
-    width: 90%;
-    height: 90%;
-    background: rgba(128, 93, 243, 0.5);
-    border-radius: 10px;
-    top: 15px;
-    left: 15px;
+    width: 98%;
+    height: 98%;
+    background: rgba(255, 94, 98, 0.6);
+    border-radius: 15px;
+    top: 10px;
+    left: 10px;
     z-index: -1;
     transition: transform 0.3s ease;
 }
@@ -1112,45 +1126,6 @@ h2::before {
             <p>Download ready-to-use design templates for your business or projects.</p>
             <p class="price">$19.99</p>
             <a href="images/design-template.zip" download class="buy-btn">Pay Now</a>
-        </div>
-    </div>
-
-     <!-- Feedback Section -->
-     <div class="feedback-section">
-        <div class="feedback-title">
-            <h2>What Our Clients Say</h2>
-        </div>
-        <div class="feedback-container">
-            <div class="feedback-item">
-                <p class="feedback-text">"Creative Horizon exceeded our expectations in every way. The designs were fresh, innovative, and exactly what we were looking for. Their team truly understands the vision we had for our project!"</p>
-                <div class="feedback-author">
-                    <img src="images\logo\d.jpg" alt="Client 1" class="avatar">
-                    <div class="author-info">
-                        <h4 class="author-name">John Doe</h4>
-                        <p class="author-title">CEO, ExampleCorp</p>
-                    </div>
-                </div>
-            </div>
-            <div class="feedback-item">
-                <p class="feedback-text">"Working with Creative Horizon was an absolute pleasure. They brought our ideas to life with their creativity and attention to detail. 91808ghly recommend them for anyone looking to make an impact!"</p>
-                <div class="feedback-author">
-                    <img src="images\logo\b.jpeg" alt="Client 2" class="avatar">
-                    <div class="author-info">
-                        <h4 class="author-name">Sarah Lee</h4>
-                        <p class="author-title">Marketing Director, InnovateX</p>
-                    </div>
-                </div>
-            </div>
-            <div class="feedback-item">
-                <p class="feedback-text">"The team at Creative Horizon is top-notch. Their design skills are second to none, and they truly care about bringing your brand vision to life. We're thrilled with the outcome!"</p>
-                <div class="feedback-author">
-                    <img src="images\logo\c.jpeg" alt="Client 3" class="avatar">
-                    <div class="author-info">
-                        <h4 class="author-name">Elisa</h4>
-                        <p class="author-title">Founder, TechPro Solutions</p>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 

@@ -6,14 +6,9 @@ if (!isset($_SESSION["user"])) {
 }
 
 $username = $_SESSION["user"]; // Get the username from the session
-if (isset($_POST['logout'])) {
-    session_destroy(); // Destroy the session
-    unset($_SESSION["user"]); // Unset session variable
-    header("Location: index.php"); // Redirect to login page
-    exit();
-}
-
+$username = $_SESSION["user"]; // Get the username from the session
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -698,86 +693,74 @@ if (isset($_POST['logout'])) {
       .swiper-slide:nth-child(11) .profile-item { background-color: #f3e5f5; } /* Lavender */
       .swiper-slide:nth-child(12) .profile-item { background-color: #fff3e0; } /* Light Peach */
   
-/* Updated contact-page */
+/contact-page/
 .contact-container {
-    width: 100%;
-    max-width: 100%;
+    width: 90%;
+    max-width: 550px;
     margin: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 60px 0;
-    background: linear-gradient(135deg, #4f4feb, #ccafe3);
 }
 
 .contact-form {
-    width: 70%;
-    max-width: 1000px;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 50px;
-    border-radius: 20px;
-    box-shadow: 15px 15px 40px rgba(0, 0, 0, 0.3), -15px -15px 40px rgba(255, 255, 255, 0.2);
+    background: linear-gradient(45deg, #4f4feb, #ccafe3);
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2), -5px -5px 15px rgba(255, 255, 255, 0.1);
     text-align: center;
     position: relative;
-    backdrop-filter: blur(15px);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .contact-form:hover {
     transform: translateY(-10px);
-    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.4), -20px -20px 50px rgba(255, 255, 255, 0.3);
+    box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.3), -10px -10px 25px rgba(255, 255, 255, 0.2);
 }
 
 .contact-form h1 {
     color: #fff;
-    font-size: 32px;
-    margin-bottom: 20px;
-    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 24px;
 }
 
 .contact-form p {
     color: #eee;
-    font-size: 18px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+    font-size: 14px;
 }
 
 .contact-form input, .contact-form textarea {
     width: 100%;
-    padding: 18px;
-    margin-bottom: 25px;
+    padding: 10px;
+    margin-bottom: 15px;
     border: none;
-    border-radius: 10px;
+    border-radius: 5px;
     box-sizing: border-box;
-    font-size: 18px;
-    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.2), inset -5px -5px 10px rgba(255, 255, 255, 0.1);
+    box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.2), inset -3px -3px 6px rgba(255, 255, 255, 0.1);
     transition: box-shadow 0.3s ease;
 }
 
 .contact-form input:focus, .contact-form textarea:focus {
-    box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.4), inset -3px -3px 6px rgba(255, 255, 255, 0.2);
+    box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.4), inset -1px -1px 2px rgba(255, 255, 255, 0.2);
     outline: none;
 }
 
 .contact-form textarea {
-    height: 180px;
+    height: 100px;
     resize: none;
 }
 
 .contact-form button {
-    padding: 15px 30px;
+    padding: 10px 20px;
     background-color: #4B6FEE;
     color: #fff;
     border: none;
-    border-radius: 10px;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
     transition: background-color 0.3s, transform 0.3s;
 }
 
 .contact-form button:hover {
     background-color: #354FC7;
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .contact-form .reset {
@@ -790,12 +773,12 @@ if (isset($_POST['logout'])) {
 
 .background-shadow {
     position: absolute;
-    width: 98%;
-    height: 98%;
+    width: 90%;
+    height: 90%;
     background: rgba(128, 93, 243, 0.5);
-    border-radius: 20px;
-    top: 10px;
-    left: 10px;
+    border-radius: 10px;
+    top: 15px;
+    left: 15px;
     z-index: -1;
     transition: transform 0.3s ease;
 }
@@ -945,15 +928,10 @@ if (isset($_POST['logout'])) {
             <div class="user-container">
                 <!-- Marquee for Welcome Message -->
                 <marquee class="welcome-message" id="welcome-message" scrollamount="10" direction="left">
-                    Welcome, <?php echo htmlspecialchars($username); ?>!
+                    Welcome, User! 
                 </marquee>
                 <!-- Logout Button -->
-                <form method="post">
-    <button type="submit" name="logout" class="logout-button">
-        Logout <i class="fa fa-sign-out-alt"></i>
-    </button>
-</form>
-
+                <button class="logout-button" onclick="logoutUser()">Logout <i class="fa fa-sign-out-alt"></i></button>
                 <!-- Purchase Icon -->
                 <div class="purchase-icon" aria-label="Shopping Cart">
                     <i class="fa fa-shopping-cart"></i>
@@ -967,17 +945,17 @@ if (isset($_POST['logout'])) {
                 <li class="dropdown">
                     <a href="#">Categories <i class="fa fa-chevron-down dropdown-arrow"></i></a>
                     <div class="dropdown-content">
-                        <a href="categ_nature.php">Nature</a>
-                        <a href="categ_paint.php">Paint</a>
-                        <a href="categ_sketch.php">Sketch</a>
+                        <a href="categ_nature.html">Nature</a>
+                        <a href="categ_paint.html">Paint</a>
+                        <a href="categ_sketch.html">Sketch</a>
                     </div>
                 </li>
                 <li class="dropdown">
                     <a href="#">Artist <i class="fa fa-chevron-down dropdown-arrow"></i></a>
                     <div class="dropdown-content">
-                        <a href="artist_1.php">Painter</a>
-                        <a href="artist_2.php">Sculptor</a>
-                        <a href="artist_3.php">Digital Artist</a>
+                        <a href="artist_1.html">Painter</a>
+                        <a href="artist_2.html">Sculptor</a>
+                        <a href="artist_3.html">Digital Artist</a>
                     </div>
                 </li>
                 <li><a href="#">Contact</a></li>
@@ -1114,6 +1092,103 @@ if (isset($_POST['logout'])) {
             <a href="images/design-template.zip" download class="buy-btn">Pay Now</a>
         </div>
     </div>
+      <!-- Art Gallery Section -->
+  <section id="profiles" class="profile-section">
+    <div class="container section-title">
+      <h2>Art Gallery</h2>
+      <p>Discover the masterpieces of legendary artists from around the world</p>
+    </div>
+
+    <div class="container">
+      <div class="swiper">
+        <div class="swiper-wrapper">
+
+          <!-- Artist Item 1 -->
+          <div class="swiper-slide">
+            <div class="profile-item">
+              <img src="https://via.placeholder.com/140" class="profile-img" alt="Pablo Picasso">
+              <h3>Pablo Picasso</h3>
+              <h4>Cubism Pioneer</h4>
+              <p>Renowned for transforming modern art with groundbreaking styles and techniques, Picasso redefined artistic expression.</p>
+            </div>
+          </div>
+
+          <!-- Artist Item 2 -->
+          <div class="swiper-slide">
+            <div class="profile-item">
+              <img src="https://via.placeholder.com/140" class="profile-img" alt="Frida Kahlo">
+              <h3>Frida Kahlo</h3>
+              <h4>Iconic Painter</h4>
+              <p>Famous for her vibrant self-portraits and exploration of identity, gender, and culture in her art.</p>
+            </div>
+          </div>
+
+          <!-- Artist Item 3 -->
+          <div class="swiper-slide">
+            <div class="profile-item">
+              <img src="https://via.placeholder.com/140" class="profile-img" alt="Leonardo da Vinci">
+              <h3>Leonardo da Vinci</h3>
+              <h4>Renaissance Genius</h4>
+              <p>A true polymath, da Vinci created masterpieces like the Mona Lisa and contributed to art, science, and invention.</p>
+            </div>
+          </div>
+
+          <!-- Artist Item 4 -->
+          <div class="swiper-slide">
+            <div class="profile-item">
+              <img src="https://via.placeholder.com/140" class="profile-img" alt="Vincent van Gogh">
+              <h3>Vincent van Gogh</h3>
+              <h4>Post-Impressionist Master</h4>
+              <p>Known for his expressive brushwork and emotional depth, Van Gogh's work remains iconic in art history.</p>
+            </div>
+          </div>
+
+          <!-- Artist Item 5 -->
+          <div class="swiper-slide">
+            <div class="profile-item">
+              <img src="https://via.placeholder.com/140" class="profile-img" alt="Claude Monet">
+              <h3>Claude Monet</h3>
+              <h4>Impressionist Innovator</h4>
+              <p>Monet's use of light and color in works like "Water Lilies" shaped the Impressionist movement.</p>
+            </div>
+          </div>
+
+          <!-- Artist Item 6 -->
+          <div class="swiper-slide">
+            <div class="profile-item">
+              <img src="https://via.placeholder.com/140" class="profile-img" alt="Georgia O'Keeffe">
+              <h3>Georgia O'Keeffe</h3>
+              <h4>Modernist Icon</h4>
+              <p>Known for her large-scale depictions of flowers and southwestern landscapes, O'Keeffe revolutionized American art.</p>
+            </div>
+          </div>
+
+          <!-- Artist Item 7 -->
+          <div class="swiper-slide">
+            <div class="profile-item">
+              <img src="https://via.placeholder.com/140" class="profile-img" alt="Salvador Dalí">
+              <h3>Salvador Dalí</h3>
+              <h4>Surrealist Genius</h4>
+              <p>Dalí's surrealist works, filled with dreamlike imagery, have captivated viewers worldwide for decades.</p>
+            </div>
+          </div>
+
+          <!-- Artist Item 8 -->
+          <div class="swiper-slide">
+            <div class="profile-item">
+              <img src="https://via.placeholder.com/140" class="profile-img" alt="Andy Warhol">
+              <h3>Andy Warhol</h3>
+              <h4>Pop Art Pioneer</h4>
+              <p>Warhol's work, including his famous Campbell's Soup Cans, transformed consumer culture into high art.</p>
+            </div>
+          </div>
+
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+
+  </section>
    <!-- Swiper JS -->
    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
@@ -1132,7 +1207,7 @@ if (isset($_POST['logout'])) {
             </form>
             <div class="background-shadow"></div>
         </div>
-    </div>
+        </div>
 
     <!-- Footer Section -->
     <div class="footer">
@@ -1144,21 +1219,21 @@ if (isset($_POST['logout'])) {
             <div class="footer-section">
                 <h3 class="footer-title">Quick Links</h3>
                 <ul>
-                    <li><a href="index.php">Home</a></li>
+                    <li><a href="index.html">Home</a></li>
                     <li class="dropdown">
                         <a href="#">Categories <i class="fa fa-chevron-down dropdown-arrow"></i></a>
                         <div class="dropdown-content">
-                            <a href="categ_nature.php">Web Design</a>
-                            <a href="categ_paint.php">Graphic Design</a>
-                            <a href="categ_sketch.php">Marketing</a>
+                            <a href="categ_nature.html">Web Design</a>
+                            <a href="categ_paint.html">Graphic Design</a>
+                            <a href="categ_sketch.html">Marketing</a>
                         </div>
                     </li>
                     <li class="dropdown">
                         <a href="#">Artist <i class="fa fa-chevron-down dropdown-arrow"></i></a>
                         <div class="dropdown-content">
-                            <a href="artist_1.php">Painter</a>
-                            <a href="artist_2.php">Sculptor</a>
-                            <a href="artist_3.php">Digital Artist</a>
+                            <a href="artist_1.html">Painter</a>
+                            <a href="artist_2.html">Sculptor</a>
+                            <a href="artist_3.html">Digital Artist</a>
                         </div>
                     </li>
                     <li><a href="#">Contact</a></li>
@@ -1310,27 +1385,41 @@ function selectSuggestion(suggestion) {
       },
     });
   });
- 
+  // Function to logout the user
+function logoutUser() {
+// Clear the stored user data from local storage
+localStorage.removeItem('username');
+localStorage.removeItem('email');
+localStorage.removeItem('password');
+alert('You have been logged out');
+// Redirect to the login page or homepage
+window.location.href = 'index.html';
+}
 
 // Function to handle the login flow
 function loginUser(username, password) {
 // Here we are assuming the username and password are valid. In real-world scenarios, you should validate them with your backend.
 localStorage.setItem('username', username);
 alert('Logged in successfully');
-window.location.href = 'nature.php'; // Redirect to the nature page or desired page after login
+window.location.href = 'nature.html'; // Redirect to the nature page or desired page after login
 }
 // Function to display the username after login
+function displayUsername() {
+    const username = localStorage.getItem('username');
+    const welcomeMessage = document.getElementById('welcome-message');
     if (username) {
+        welcomeMessage.textContent = Welcome, ${username}!; // Update the welcome message
         document.getElementById('welcome-message').style.display = 'block';
         document.getElementById('logout-btn').style.display = 'block'; // Show logout button if the user is logged in
     } else {
         welcomeMessage.textContent = 'Welcome, User!'; // Default message if no username
         document.getElementById('logout-btn').style.display = 'none'; // Hide logout button if not logged in
     }
-
+}
 
 
 // Display the username on page load
+document.addEventListener('DOMContentLoaded', displayUsername);
 
 // Function to handle signup
 function signupUser(username, email, password) {
@@ -1339,7 +1428,7 @@ localStorage.setItem('username', username);
 localStorage.setItem('email', email);
 localStorage.setItem('password', password);
 alert('Signup successful');
-window.location.href = 'profile.php'; // Redirect to nature page after signup
+window.location.href = 'profile.html'; // Redirect to nature page after signup
 }
 
 
@@ -1381,8 +1470,8 @@ window.location.href = 'profile.php'; // Redirect to nature page after signup
         if (images[currentIndex]) {
             const { src, description } = images[currentIndex];
             modalImg.src = src;
-            modalImg.alt = description ||' Image ${currentIndex + 1}';
-            modalTitle.innerText =' Image ${currentIndex + 1}';
+            modalImg.alt = description || Image ${currentIndex + 1};
+            modalTitle.innerText = Image ${currentIndex + 1};
             modalDescription.innerText = description;
         } else {
             console.error('Invalid image index.');
@@ -1401,7 +1490,7 @@ window.location.href = 'profile.php'; // Redirect to nature page after signup
         if (images[currentIndex]) {
             const link = document.createElement('a');
             link.href = images[currentIndex].src;
-            link.download = 'Image_${currentIndex + 1}.jpg';
+            link.download = Image_${currentIndex + 1}.jpg;
             link.click();
         } else {
             console.error('Invalid image index.');
@@ -1414,7 +1503,7 @@ window.location.href = 'profile.php'; // Redirect to nature page after signup
         if (navigator.share) {
             navigator.share({
                 title: 'Check out this image!',
-                text: 'Look at this amazing artwork: ${images[currentIndex].description}',
+                text: Look at this amazing artwork: ${images[currentIndex].description},
                 url: imageUrl,
             }).catch(error => console.error('Error sharing:', error));
         } else {
